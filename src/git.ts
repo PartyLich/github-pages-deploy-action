@@ -1,5 +1,6 @@
 import {info} from '@actions/core'
 import {mkdirP, rmRF} from '@actions/io'
+import * as github from '@actions/github'
 import fs from 'fs'
 import {
   ActionInterface,
@@ -315,6 +316,32 @@ export async function deploy(action: ActionInterface): Promise<Status> {
     }
 
     info(`Changes committed to the ${action.branch} branch… 📦`)
+
+    if (action.openPr) {
+      if (action.base === action.branch) {
+        throw new Error(
+          `The 'base' and 'branch' for a pull request must be different branches. Unable to continue.`
+        )
+      }
+
+      info(`Creating pull request from ${action.branch} to ${action.base}`)
+
+      // FIXME: Token is required, though the typing suggests it could be missing
+      const gh = github.getOctokit(action.token as string)
+      const res = await gh.rest.pulls.create({
+        ...github.context.repo, // owner and repo
+        base: action.base,
+        head: action.branch,
+        title: `automated ${action.base} update`,
+        maintainer_can_modify: true
+      })
+      if (res.status != 201) {
+        throw new Error(`Failed to open pull request. Status ${res.status}`)
+      }
+
+      const {data: pr} = res
+      info(`Opened PR #${pr.number}: ${pr.html_url}`)
+    }
 
     return Status.SUCCESS
   } catch (error) {
