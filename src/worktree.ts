@@ -32,7 +32,7 @@ export async function generateWorktree(
 
     if (branchExists) {
       await execute(
-        `git fetch --no-recurse-submodules --depth=1 origin ${action.branch}`,
+        `git fetch --no-recurse-submodules --depth=1 origin ${action.base}`,
         action.workspace,
         action.silent
       )
@@ -47,8 +47,8 @@ export async function generateWorktree(
     const checkout = new GitCheckout(action.branch)
 
     if (branchExists) {
-      // There's existing data on the branch to check out
-      checkout.commitish = `origin/${action.branch}`
+      // There's existing data on the base branch to check out
+      checkout.commitish = `origin/${action.base}`
     }
 
     if (

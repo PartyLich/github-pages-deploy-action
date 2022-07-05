@@ -121,7 +121,7 @@ export async function deploy(action: ActionInterface): Promise<Status> {
       Boolean(
         (
           await execute(
-            `git ls-remote --heads ${action.repositoryPath} refs/heads/${action.branch}`,
+            `git ls-remote --heads ${action.repositoryPath} refs/heads/${action.base}`,
             action.workspace,
             action.silent
           )
@@ -204,7 +204,7 @@ export async function deploy(action: ActionInterface): Promise<Status> {
     // changed.
     const checkGitStatus =
       branchExists && action.singleCommit
-        ? `git diff origin/${action.branch}`
+        ? `git diff origin/${action.base}`
         : `git status --porcelain`
 
     info(`Checking if there are files to commit…`)
@@ -278,15 +278,15 @@ export async function deploy(action: ActionInterface): Promise<Status> {
         // the final attempt, time is not wasted rebasing it when it will
         // not be pushed
         if (rejected) {
-          info(`Fetching upstream ${action.branch}…`)
+          info(`Fetching upstream ${action.base}…`)
           await execute(
-            `git fetch ${action.repositoryPath} ${action.branch}:${action.branch}`,
+            `git fetch ${action.repositoryPath} ${action.base}:${action.base}`,
             `${action.workspace}/${temporaryDeploymentDirectory}`,
             action.silent
           )
-          info(`Rebasing this deployment onto ${action.branch}…`)
+          info(`Rebasing this deployment onto ${action.base}…`)
           await execute(
-            `git rebase ${action.branch} ${temporaryDeploymentBranch}`,
+            `git rebase ${action.base} ${temporaryDeploymentBranch}`,
             `${action.workspace}/${temporaryDeploymentDirectory}`,
             action.silent
           )
