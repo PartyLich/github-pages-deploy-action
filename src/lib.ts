@@ -57,6 +57,9 @@ export default async function run(
         ? configuration.branch
         : 'gh-pages'
     }
+    if (isNullOrUndefined(settings.base)) {
+      settings.base = settings.branch
+    }
 
     // Defines the repository/folder paths and token types.
     // Also verifies that the action has all of the required parameters.

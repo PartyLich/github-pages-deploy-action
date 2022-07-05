@@ -16,6 +16,8 @@ export enum TestFlag {
 
 /* For more information please refer to the README: https://github.com/JamesIves/github-pages-deploy-action */
 export interface ActionInterface {
+  /** The branch that the action should base on. */
+  base: string
   /** The branch that the action should deploy to. */
   branch: string
   /** git push with --dry-run */
@@ -62,6 +64,8 @@ export interface ActionInterface {
 
 /** The minimum required values to run the action as a node module. */
 export interface NodeActionInterface {
+  /** The branch that the action should base on. */
+  base: string
   /** The branch that the action should deploy to. */
   branch?: string
   /** The folder to deploy. */
@@ -83,6 +87,9 @@ export interface NodeActionInterface {
 /* Required action data that gets initialized when running within the GitHub Actions environment. */
 export const action: ActionInterface = {
   folder: getInput('folder'),
+  base: !isNullOrUndefined(getInput('base'))
+    ? getInput('base')
+    : getInput('branch'),
   branch: getInput('branch'),
   commitMessage: getInput('commit-message'),
   dryRun: !isNullOrUndefined(getInput('dry-run'))

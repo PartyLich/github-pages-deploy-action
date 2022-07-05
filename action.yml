@@ -31,6 +31,11 @@ inputs:
     required: false
     default: ${{ github.token }}
 
+  base:
+    description: 'This is the branch that the action should base on and that PRs will be directed to, for example gh-pages or docs.'
+    required: false
+    default: gh-pages
+
   branch:
     description: 'This is the branch you wish to deploy to, for example gh-pages or docs.'
     required: false

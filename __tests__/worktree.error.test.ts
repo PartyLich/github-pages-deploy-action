@@ -19,6 +19,7 @@ describe('generateWorktree', () => {
           hostname: 'github.com',
           workspace: 'somewhere',
           singleCommit: false,
+          base: 'gh-pages',
           branch: 'gh-pages',
           folder: '',
           silent: true,

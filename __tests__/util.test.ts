@@ -36,6 +36,7 @@ describe('util', () => {
   describe('generateTokenType', () => {
     it('should return ssh if ssh is provided', async () => {
       const action = {
+        base: '123',
         branch: '123',
         workspace: 'src/',
         folder: 'build',
@@ -49,6 +50,7 @@ describe('util', () => {
 
     it('should return deploy token if token is provided', async () => {
       const action = {
+        base: '123',
         branch: '123',
         workspace: 'src/',
         folder: 'build',
@@ -62,6 +64,7 @@ describe('util', () => {
 
     it('should return ... if no token is provided', async () => {
       const action = {
+        base: '123',
         branch: '123',
         workspace: 'src/',
         folder: 'build',
@@ -78,6 +81,7 @@ describe('util', () => {
     it('should return ssh if ssh is provided', async () => {
       const action = {
         repositoryName: 'JamesIves/github-pages-deploy-action',
+        base: '123',
         branch: '123',
         workspace: 'src/',
         folder: 'build',
@@ -96,6 +100,7 @@ describe('util', () => {
     it('should return https with x-access-token if deploy token is provided', async () => {
       const action = {
         repositoryName: 'JamesIves/github-pages-deploy-action',
+        base: '123',
         branch: '123',
         workspace: 'src/',
         folder: 'build',
@@ -117,6 +122,7 @@ describe('util', () => {
           repositoryName: 'JamesIves/github-pages-deploy-action',
           repositoryPath:
             'https://x-access-token:supersecret999%%%@github.com/anothersecret123333',
+          base: '123',
           branch: '123',
           workspace: 'src/',
           folder: 'build',
@@ -136,6 +142,7 @@ describe('util', () => {
           repositoryName: 'JamesIves/github-pages-deploy-action',
           repositoryPath:
             'https://x-access-token:supersecret999%%%@github.com/anothersecret123333',
+          base: '123',
           branch: '123',
           workspace: 'src/',
           folder: 'build',
@@ -157,6 +164,7 @@ describe('util', () => {
   describe('generateFolderPath', () => {
     it('should return absolute path if folder name is provided', () => {
       const action = {
+        base: '123',
         branch: '123',
         workspace: 'src/',
         folder: 'build',
@@ -170,6 +178,7 @@ describe('util', () => {
 
     it('should return original path if folder name begins with /', () => {
       const action = {
+        base: '123',
         branch: '123',
         workspace: 'src/',
         folder: '/home/user/repo/build',
@@ -183,6 +192,7 @@ describe('util', () => {
 
     it('should process as relative path if folder name begins with ./', () => {
       const action = {
+        base: '123',
         branch: '123',
         workspace: 'src/',
         folder: './build',
@@ -196,6 +206,7 @@ describe('util', () => {
 
     it('should return absolute path if folder name begins with ~', () => {
       const action = {
+        base: '123',
         branch: '123',
         workspace: 'src/',
         folder: '~/repo/build',
@@ -214,6 +225,7 @@ describe('util', () => {
       const action = {
         silent: false,
         repositoryPath: undefined,
+        base: 'branch',
         branch: 'branch',
         folder: 'build',
         workspace: 'src/',
@@ -234,6 +246,7 @@ describe('util', () => {
         silent: false,
         repositoryPath: undefined,
         token: '',
+        base: 'branch',
         branch: 'branch',
         folder: 'build',
         workspace: 'src/',
@@ -254,6 +267,7 @@ describe('util', () => {
         silent: false,
         repositoryPath: undefined,
         token: '123',
+        base: '',
         branch: '',
         folder: 'build',
         workspace: 'src/',
@@ -272,6 +286,7 @@ describe('util', () => {
         silent: false,
         repositoryPath: undefined,
         token: '123',
+        base: 'branch',
         branch: 'branch',
         folder: '',
         workspace: 'src/',
@@ -292,6 +307,7 @@ describe('util', () => {
         silent: false,
         repositoryPath: undefined,
         token: '123',
+        base: 'branch',
         branch: 'branch',
         folder: 'notARealFolder',
         workspace: '.',
