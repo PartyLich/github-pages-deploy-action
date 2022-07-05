@@ -42,6 +42,8 @@ export interface ActionInterface {
   isTest: TestFlag
   /** The git config name. */
   name?: string
+  /** Open a PR from the branch to base? */
+  openPr?: boolean
   /** The repository path, for example JamesIves/github-pages-deploy-action. */
   repositoryName?: string
   /** The fully qualified repositpory path, this gets auto generated if repositoryName is provided. */
@@ -98,6 +100,9 @@ export const action: ActionInterface = {
   force: !isNullOrUndefined(getInput('force'))
     ? getInput('force').toLowerCase() === 'true'
     : true,
+  openPr: !isNullOrUndefined(getInput('openPr'))
+    ? getInput('openPr').toLowerCase() === 'true'
+    : false,
   clean: !isNullOrUndefined(getInput('clean'))
     ? getInput('clean').toLowerCase() === 'true'
     : false,

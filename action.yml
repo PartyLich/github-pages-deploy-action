@@ -36,6 +36,9 @@ inputs:
     required: false
     default: gh-pages
 
+  openPr:
+    description: Set to true if you would like to open a PR from the created push. Only possible when `base` and `branch` differ.
+
   branch:
     description: 'This is the branch you wish to deploy to, for example gh-pages or docs.'
     required: false
