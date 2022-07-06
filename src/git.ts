@@ -309,9 +309,14 @@ export async function deploy(action: ActionInterface): Promise<Status> {
 
         if (rejected) info('Updates were rejected')
 
+        // Create pull request notice is not an error, despite printing to stderr
+        const prNotice = pushResult.stderr.includes(`Create a pull request for`)
+
         // If the push failed for any reason other than being rejected,
         // there is a problem
-        if (!rejected && pushResult.stderr) throw new Error(pushResult.stderr)
+        if (!rejected && !prNotice && pushResult.stderr) {
+          throw new Error(pushResult.stderr)
+        }
       } while (rejected)
     }
 
